@@ -3,7 +3,7 @@
 
 //Lista de TOKENS
 typedef enum{
-    TOKEN_ENUM, // número inteiro (ex.: "123")
+    TOKEN_NUM, // número inteiro (ex.: "123")
     TOKEN_IDEN, // identificador (ex.: "x", "foo")
     TOKEN_PRINT, // palavra‐reservada "print"
     TOKEN_PLUS, // '+'
