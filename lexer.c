@@ -98,7 +98,7 @@ Token next_token(void) {
 }
 
 //Chamar no inicio do programa, passando todo o texto-fonte
-void init_lexer(const char *input){
+void init_lexer(const char *input) {
     src = input;
     pos = 0;
     current_char = src[0];

@@ -10,7 +10,7 @@ Token current_token;
 //Metodo eat para "comer e avançar" se for o token esperado
 static void eat(TokenType esperado) {
     if (current_token.type == esperado){
-        current_token.type = next_token();
+        current_token = next_token();
     } else {
         printf("Erro sintático: esperado token %d, mas veio %d (lexeme='%s')\n", esperado, current_token.type, current_token.lexeme);
         exit(1);
@@ -60,13 +60,33 @@ static AST* parse_comando(void) {
     }
 }
 
-//Perse de expr = termo (( '+' | '-' )termo)*
+// Parse de “termo” = fator (( '*' | '/' ) fator)
+static AST* parse_termo(void) {
+    AST *node = parse_fator();
+
+    while (current_token.type == TOKEN_STAR || current_token.type == TOKEN_SLASH) {
+        TokenType op = current_token.type;
+        if (op == TOKEN_STAR) {
+            eat(TOKEN_STAR);
+            AST *right = parse_fator();
+            node = new_binary_node(NODE_MUL, node, right);
+        } else { // op == TOKEN_SLASH
+            eat(TOKEN_SLASH);
+            AST *right = parse_fator();
+            node = new_binary_node(NODE_DIV, node, right);
+        }
+    }
+    return node;
+}
+
+
+// Parse de “expr” = termo (( '+' | '-' ) termo)*
 static AST* parse_expr(void) {
     AST *node = parse_termo();
 
-    while(current_token.type == TOKEN_PLUS || current_token.type == TOKEN_MINUS){
+    while (current_token.type == TOKEN_PLUS || current_token.type == TOKEN_MINUS) {
         TokenType op = current_token.type;
-        if(op == TOKEN_PLUS){
+        if (op == TOKEN_PLUS) {
             eat(TOKEN_PLUS);
             AST *right = parse_termo();
             node = new_binary_node(NODE_ADD, node, right);
@@ -90,18 +110,18 @@ static AST* parse_fator(void) {
     }
     else if (current_token.type == TOKEN_IDEN) {
         // Pode ser variável (uso) ou atribuição
-        char nome[64];
-        strcpy(nome, current_token.lexeme);
+        char name[64];
+        strcpy(name, current_token.lexeme);
         eat(TOKEN_IDEN);
 
         if (current_token.type == TOKEN_ASSIGN) {
             // É atribuição: x = expr
             eat(TOKEN_ASSIGN);
             AST *expr_node = parse_expr();
-            return new_assign_node(nome, expr_node);
+            return new_assign_node(name, expr_node);
         } else {
             // É só uso de variável: retorna nó VAR
-            return new_var_node(nome);
+            return new_var_node(name);
         }
     }
     else if (current_token.type == TOKEN_LPAREN) {

@@ -17,7 +17,7 @@ typedef enum{
 typedef struct AST{
     NodeType type;
     int value;         //Para type == NODE_NUM
-    char nome[64];     //NODE_VAR ou NODE_ASSIGN
+    char name[64];     //NODE_VAR ou NODE_ASSIGN
     struct AST *left;  //Ponteiro para sub-árvore esquerda
     struct AST *right; //Ponteiro para sub-árvore direta
 } AST;
