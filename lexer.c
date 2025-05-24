@@ -57,7 +57,7 @@ Token next_token(void) {
             advance();
         }
         buffer[len] = '\0';
-        return make_token(TOKEN_NUM, buffer);//pode estar escrito errado!!
+        return make_token(TOKEN_NUM, buffer);
     }
 
     // 3 Identificador ou palavra-reservada
