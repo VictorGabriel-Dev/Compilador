@@ -102,10 +102,16 @@ static AST* parse_expr(void) {
 static AST* parse_fator(void) {
     AST *node = NULL;
 
-    if (current_token.type == TOKEN_NUM) {
+    if (current_token.type == TOKEN_INT) {
         // É nó número
-        node = new_num_node(current_token.value);
-        eat(TOKEN_NUM);
+        node = new_int_node(current_token.int_val);
+        eat(TOKEN_INT);
+        return node;
+    }
+    else if (current_token.type == TOKEN_FLOAT) {
+        // Literal ponto flutuante
+        node = new_float_node(current_token.float_val);
+        eat(TOKEN_FLOAT);
         return node;
     }
     else if (current_token.type == TOKEN_IDEN) {

@@ -3,7 +3,8 @@
 
 //Lista de TOKENS
 typedef enum{
-    TOKEN_NUM, // número inteiro (ex.: "123")
+    TOKEN_INT, // número inteiro (ex.: "123")
+    TOKEN_FLOAT, // número float (ex.: "1.80")
     TOKEN_IDEN, // identificador (ex.: "x", "foo")
     TOKEN_PRINT, // palavra‐reservada "print"
     TOKEN_PLUS, // '+'
@@ -22,7 +23,8 @@ typedef enum{
 typedef struct {
     TokenType type;
     char lexeme[64]; //copiar o texto
-    int value;
+    int int_val;
+    float float_val;
 } Token;
 
 //Função para iniciar o LEXER com uma estrutura string

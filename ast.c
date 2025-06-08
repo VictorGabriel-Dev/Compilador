@@ -2,10 +2,20 @@
 #include <string.h>
 #include "ast.h"
 
-AST* new_num_node(int value) {
+AST* new_int_node(int value) {
     AST *node = (AST*)malloc(sizeof(AST));
-    node->type = NODE_NUM;
-    node->value = value;
+    node->type = NODE_INT;
+    node->int_val = value;
+    node->float_val = (float)value;
+    node->left = node->right = NULL;
+    return node;
+}
+
+AST* new_float_node(float value) {
+    AST *node = malloc(sizeof(AST));
+    node->type = NODE_FLOAT;
+    node->float_val = value;
+    node->int_val = (int)value;
     node->left = node->right = NULL;
     return node;
 }
