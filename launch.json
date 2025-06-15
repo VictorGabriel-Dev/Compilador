@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Compiler",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/my_compiler", // Caminho para o executável compilado
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}", // Diretório de trabalho
+            "environment": [],
+            "externalConsole": true, // Para que você possa digitar a entrada do seu programa
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build compiler", // Executa a tarefa de build antes de lançar
+            "miDebuggerPath": "/usr/bin/gdb" // Pode precisar ser ajustado para seu sistema (ex: C:\MinGW\bin\gdb.exe no Windows)
+        }
+    ]
+}
